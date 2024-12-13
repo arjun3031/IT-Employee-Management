@@ -1,0 +1,766 @@
+
+
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python users</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+            background: url("{% static 'images/loginbg.webp' %}") no-repeat center center/cover;
+
+        }
+
+        
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 35px;
+            color: rgb(4, 71, 33);
+            margin-right: 14px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            color: rgb(10, 108, 61);
+            font-size: 40px;
+            margin-bottom: 5px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        .logo p {
+            font-size: 18px;
+            color: rgb(141, 145, 145);
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            margin-left: auto;
+            padding-left: 30px;
+        }
+
+        .navbar-links li {
+            margin-left: 30px;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 15px 0;
+            line-height: 60px;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: rgb(32, 188, 115);
+        }
+
+     
+        .navbar-links.toggle {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .navbar-links.active {
+            display: flex;
+        }
+
+        .toggle-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                align-items: center;
+                height: auto;
+                padding: 10px;
+            }
+
+            .navbar-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                background-color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .navbar-links li {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                text-align: left;
+            }
+          
+
+      
+
+            .navbar-links a {
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .toggle-btn {
+                display: block;
+                color: black;
+                margin-left: auto;
+            }
+        }
+
+
+ 
+
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .form-inline {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .form-select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .btn-submit {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+        
+        .user-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .card {
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.5); 
+        }
+
+        .transparent-card {
+            background-color: rgba(255, 255, 255, 0.5); 
+            border: 1px dashed #ccc; 
+        }
+        
+        .card-header {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .card-body p {
+            margin: 8px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .assigned-projects {
+            margin-top: 20px;
+        }
+        
+        .assigned-projects h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .assigned-projects ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .assigned-projects ul li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            .form-inline {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .form-select,
+            .btn-submit {
+                width: 100%;
+                max-width: none;
+            }
+            
+            .card {
+                max-width: 100%;
+            }
+            
+            .card-body p {
+                font-size: 14px;
+            }
+            
+            .assigned-projects h3 {
+                font-size: 16px;
+            }
+        }
+
+
+
+
+
+
+
+footer {
+    background-color: rgba(241, 247, 255, 0.9);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto; 
+}
+
+.footer-text {
+    font-size: 17px;
+    color: #d2cfcf;
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px 0;
+}
+
+.course-label {
+    text-align: center;
+    margin-left: 0; 
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold; 
+    color: #270000; 
+}
+
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%; 
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-column {
+            flex: 1;
+            margin: 10px 20px;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: rgb(241, 251, 255);
+        }
+
+        .footer-column p, .footer-column ul {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #c8c8c8;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-columns {
+                flex-direction: column;
+                text-align: left;
+            }
+        }
+        .notification-badge {
+            background-color: red;
+            color: white;
+            font-size: 10px;
+            border-radius: 50%;
+            padding: 3px 7px;
+            position: relative;
+            top: -10px;
+            left: 10px;
+            font-weight: bold;
+        }
+        .notification-badge {
+            background-color: red;
+            color: white;
+            font-size: 10px;
+            border-radius: 50%;
+            padding: 3px 7px;
+            position: relative;
+            top: -10px;
+            left: 10px;
+            font-weight: bold;
+        }
+        .alert-container {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }   
+        #attendance-options {
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid rgb(43, 201, 124);
+            border-radius: 4px;
+            background-color: rgb(255, 255, 255);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        #attendance-options:hover {
+            border-color: rgb(61, 191, 242);
+        }
+        
+        @media (max-width: 768px) {
+            #attendance-options {
+                width: 100%;
+                margin-top: 10px;
+                font-size: 18px;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+        .form-select {
+            width: 50%; 
+            max-width: none;
+        }
+
+        .btn-submit {
+            width: 50%;
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <div class="logo-text">
+                <h1>ALTOS</h1>
+                <p style="font-size: 14px;">Technologies</p>
+            </div>
+        </div>
+    
+        <span class="toggle-btn" id="toggle-btn">
+            <i class="fas fa-bars"></i>
+        </span>
+        <ul class="navbar-links" id="navbar-links">
+            <li><a style="font-weight: 300;" href="{% url 'adminhome' %}" class="active">ADMIN HOME</a></li>
+          
+            <li><a href="{% url 'manageuser' %}">
+                USERS
+                {% if pending_count > 0 %}
+                    <span class="notification-badge">{{ pending_count }}</span>
+                {% endif %}
+            </a></li>
+            <li><a href="{% url 'manageproject' %}">
+                PROJECTS
+                {% if project_count > 0 %}
+                    <span class="notification-badge">{{ project_count }}</span>
+                {% endif %}
+            </a></li>
+            <li>
+                <select id="attendance-options" onchange="location = this.value;" style="width:160px;">
+                    <option value="" disabled selected>DEPARTMENT</option>
+                    <option value="{% url 'pythondeppartment' %}">PYTHON</option>
+                    <option value="">DIGITAL MARKETING</option>
+
+                </select>
+            </li> 
+            <li><a style="font-weight: 300;color: red;" href="{% url 'logout' %}" class="join-now">LOGOUT</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="container">
+   
+        <form method="POST" class="form-inline">
+            {% csrf_token %}
+            <select name="worker_id" class="form-select">
+                <option value="">Select a worker</option>
+                {% for worker in python_workers %}
+                    <option value="{{ worker.id }}">{{ worker.user.first_name }} {{ worker.user.last_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn-submit">View User</button>
+        </form>
+    
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <p style="color: red;">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    
+        {% if selected_worker %}
+            <div class="user-card" style="display: flex; justify-content: center; margin-top: 20px;">
+                <div class="card" style="width: 100%; max-width: 600px; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); background-color: #fdfdfd;">
+                    <div class="card-header" style="background-color: #4CAF50; color: white; padding: 15px; text-align: center; font-size: 24px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                        {{ selected_worker.user.first_name }} {{ selected_worker.user.last_name }}
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <img src="{{ selected_worker.image.url }}" alt="User Image" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; display: block; margin: 10px auto;">
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        <p><strong>Email:</strong> {{ selected_worker.user.email }}</p>
+                        <p><strong>Mobile:</strong> {{ selected_worker.mobile }}</p>
+                        <p><strong>Address:</strong> {{ selected_worker.address }}</p>
+                        <p><strong>Department:</strong> {{ selected_worker.department }}</p>
+                        <p><strong>Role:</strong> {{ role.role|default:"Not Assigned" }}</p>
+                    </div>
+                    <div class="assigned-projects" style="padding: 20px; border-top: 1px solid #ccc;">
+                        <h3 style="margin-bottom: 10px; font-size: 20px;">Assigned Projects:</h3>
+                        {% if assigned_projects %}
+                            <ul style="list-style-type: none; padding: 0;">
+                                {% for project in assigned_projects %}
+                                    <li style="padding: 10px; background-color: #e9f5e9; border-radius: 5px; margin-bottom: 5px;">
+                                        <strong>{{ project.project_name }}</strong> (Status: {{ project.project_status }})
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p style="text-align: center; font-style: italic; color: #999;">No project assigned</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
+
+
+    <!-- <div class="container">
+        <form method="POST" class="form-inline">
+            {% csrf_token %}
+            <select name="worker_id" class="form-select">
+                <option value="">Select a worker</option>
+                {% for worker in python_workers %}
+                    <option value="{{ worker.id }}">{{ worker.user.first_name }} {{ worker.user.last_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn-submit">View User</button>
+        </form>
+    
+        {% if selected_worker %}
+            <div class="user-card" style="display: flex; justify-content: center; margin-top: 20px;">
+                <div class="card" style="width: 100%; max-width: 600px; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); background-color: #fdfdfd;">
+                    <div class="card-header" style="background-color: #4CAF50; color: white; padding: 15px; text-align: center; font-size: 24px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                        {{ selected_worker.user.first_name }} {{ selected_worker.user.last_name }}
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        <p style="margin: 10px 0; font-size: 16px;"><strong>Email:</strong> {{ selected_worker.user.email }}</p>
+                        <p style="margin: 10px 0; font-size: 16px;"><strong>Mobile:</strong> {{ selected_worker.mobile }}</p>
+                        <p style="margin: 10px 0; font-size: 16px;"><strong>Address:</strong> {{ selected_worker.address }}</p>
+                        <p style="margin: 10px 0; font-size: 16px;"><strong>Department:</strong> {{ selected_worker.department }}</p>
+                        <p style="margin: 10px 0; font-size: 16px; color: #155724;"><strong>Role:</strong> 
+                            {{ role.role|default:"Not Assigned" }}
+                        </p>
+                    </div>
+                    <div class="assigned-projects" style="padding: 20px; border-top: 1px solid #ccc;">
+                        <h3 style="margin-bottom: 10px; font-size: 20px;">Assigned Projects:</h3>
+                        {% if assigned_projects %}
+                            <ul style="list-style-type: none; padding: 0;">
+                                {% for project in assigned_projects %}
+                                    <li style="padding: 10px; background-color: #e9f5e9; border-radius: 5px; margin-bottom: 5px;">
+                                        <strong>{{ project.project_name }}</strong> (Status: {{ project.project_status }})
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p style="text-align: center; font-style: italic; color: #999;">No project assigned</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="user-card">
+                <div class="card transparent-card">
+                    <div class="card-body">
+                        <p>No employees available.</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div> -->
+    
+
+
+
+<!-- 
+    <div class="container">
+        <form method="POST" class="form-inline">
+            {% csrf_token %}
+            <select name="worker_id" class="form-select">
+                <option value="">Select a worker</option>
+                {% for worker in python_workers %}
+                    <option value="{{ worker.id }}">{{ worker.user.first_name }} {{ worker.user.last_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn-submit">View User</button>
+        </form>
+    
+        {% if selected_worker %}
+            <div class="user-card" style="display: flex; justify-content: center; margin-top: 20px;">
+                <div class="card" style="width: 100%; max-width: 600px; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); background-color: #fdfdfd;">
+                    <div class="card-header" style="background-color: #4CAF50; color: white; padding: 15px; text-align: center; font-size: 24px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                        {{ selected_worker.user.first_name }} {{ selected_worker.user.last_name }}
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        <p style="margin: 10px 0; font-size: 16px;"><strong>Email:</strong> {{ selected_worker.user.email }}</p>
+                        <p style="margin: 10px 0; font-size: 16px;"><strong>Mobile:</strong> {{ selected_worker.mobile }}</p>
+                        <p style="margin: 10px 0; font-size: 16px;"><strong>Address:</strong> {{ selected_worker.address }}</p>
+                        <p style="margin: 10px 0; font-size: 16px;"><strong>Department:</strong> {{ selected_worker.department }}</p>
+                        <p style="margin: 10px 0; font-size: 16px; color: #155724;"><strong>Role:</strong> 
+                            {{ role.role|default:"Not Assigned" }}
+                        </p>
+                    </div>
+                    <div class="assigned-projects" style="padding: 20px; border-top: 1px solid #ccc;">
+                        <h3 style="margin-bottom: 10px; font-size: 20px;">Assigned Projects:</h3>
+                        {% if assigned_projects %}
+                            <ul style="list-style-type: none; padding: 0;">
+                                {% for project in assigned_projects %}
+                                    <li style="padding: 10px; background-color: #e9f5e9; border-radius: 5px; margin-bottom: 5px;">
+                                        <strong>{{ project.project_name }}</strong> (Status: {{ project.project_status }})
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p style="text-align: center; font-style: italic; color: #999;">No project assigned</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+        {% else %}
+            <div class="user-card">
+                <div class="card transparent-card">
+                    <div class="card-body">
+                        <p>No employees available.</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div> -->
+    
+
+
+     
+    <footer>
+        <div class="footer-container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <p>We are dedicated to providing quality education.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                <p class="footer-text">&copy; 2024 Altos Technologies. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+   
+    <script>
+        const toggleBtn = document.getElementById('toggle-btn');
+        const navbarLinks = document.getElementById('navbar-links');
+    
+        toggleBtn.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active'); 
+        });
+    </script>
+</body>
+</html> 
+
+
+

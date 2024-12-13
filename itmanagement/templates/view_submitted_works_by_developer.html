@@ -1,0 +1,879 @@
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update daily report Team leader</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+            background: url("{% static 'images/tm.jpg' %}") no-repeat center center/cover;
+
+        }
+
+        
+        
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 35px;
+            color: rgb(4, 71, 33);
+            margin-right: 14px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            color: rgb(10, 108, 61);
+            font-size: 40px;
+            margin-bottom: 5px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        .logo p {
+            font-size: 18px;
+            color: rgb(141, 145, 145);
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            margin-left: auto;
+            padding-left: 30px;
+        }
+
+        .navbar-links li {
+            margin-left: 30px;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 15px 0;
+            line-height: 60px;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: rgb(32, 188, 115);
+        }
+
+     
+        .navbar-links.toggle {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .navbar-links.active {
+            display: flex;
+        }
+
+        .toggle-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                align-items: center;
+                height: auto;
+                padding: 10px;
+            }
+
+            .navbar-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                background-color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .navbar-links li {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                text-align: left;
+            }
+        
+
+       
+            .navbar-links a {
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .toggle-btn {
+                display: block;
+                color: black;
+                margin-left: auto;
+            }
+        }
+
+    
+
+
+        .container {
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 30px;
+    background-color: rgba(249, 254, 255, 0.7);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.label {
+    font-weight: 100;
+    margin-bottom: 10px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px; 
+    background-color: white;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+select:focus {
+    border-color: #1770d6;
+    outline: none;
+}
+
+.table-responsive {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    overflow-x: auto; 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    text-align: center;
+    background-color: white;
+    margin-bottom: 100px;
+    table-layout: auto;
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    background-color: rgba(249, 254, 255, 0.7);
+}
+
+th {
+    background-color: #57854f;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f0f8ff;
+}
+
+img {
+    max-width: 80px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+td img {
+    margin-top: 10px;
+}
+
+a {
+    color: #d22e0b;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    color: #a62000;
+}
+
+.table-text {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    color: #ae2c2c;
+    border: 1px solid #a0a0a0;
+    width: 50%;
+    margin: 0 auto; 
+    background-color: #f5e4e0;
+    padding: 10px 0;
+}
+
+footer {
+    margin-top: 20px; 
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        max-width: 95%;
+    }
+
+    label {
+        margin-left: 0; 
+        text-align: center; 
+    }
+
+    select {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .table-responsive {
+        padding: 0 10px; 
+        overflow-x: auto; 
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    img {
+        max-width: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+        max-width: 100%; 
+    }
+
+    .table-responsive {
+        padding: 0 5px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    img {
+        max-width: 50px;
+    }
+
+    select {
+        width: 100%;
+        padding: 8px;
+    }
+}
+
+footer {
+    background-color: rgba(23, 112, 214, 0.9);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto; 
+}
+
+.footer-text {
+    font-size: 17px;
+    color: #d2cfcf;
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px 0;
+}
+
+.course-label {
+    text-align: center;
+    margin-left: 0; 
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold; 
+    color: #270000; 
+}
+
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%; 
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-column {
+            flex: 1;
+            margin: 10px 20px;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: rgb(241, 251, 255);
+        }
+
+        .footer-column p, .footer-column ul {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #c8c8c8;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-columns {
+                flex-direction: column;
+                text-align: left;
+            }
+        }
+        .notification-badge {
+            background-color: red;
+            color: white;
+            font-size: 10px;
+            border-radius: 50%;
+            padding: 3px 7px;
+            position: relative;
+            top: -10px;
+            left: 10px;
+            font-weight: bold;
+        }
+        .notification-badge {
+            background-color: red;
+            color: white;
+            font-size: 10px;
+            border-radius: 50%;
+            padding: 3px 7px;
+            position: relative;
+            top: -10px;
+            left: 10px;
+            font-weight: bold;
+        }
+        .message-container {
+    margin-bottom: 20px;
+    display: flex; 
+    justify-content: center; 
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 1em;
+    color: #ff0000; 
+    border: 1px solid #000;
+    background-color: #fff3f3; 
+    width: 100%; 
+    max-width: 300px; 
+    text-align: center; 
+}
+
+.alert.success {
+    color: white;
+    background-color: #28a745; 
+}
+
+.alert.error {
+    color: #721c24;
+    background-color: #edd5d7; 
+    border-color: #f5c6cb; 
+}
+
+        #attendance-options {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid rgb(43, 201, 124);
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+#attendance-options:hover {
+    border-color: rgb(61, 191, 242);
+}
+
+@media (max-width: 768px) {
+    #attendance-options {
+        width: 100%;
+        margin-top: 10px;
+        font-size: 18px;
+    }
+}
+
+
+
+.btn-promote {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-promote:hover {
+    background-color: #218838;
+}
+
+.btn-demote {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-demote:hover {
+    background-color: #c82333;
+}
+
+.btn-assign {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-assign:hover {
+    background-color: #0069d9;
+}
+
+#attendance-options {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid rgb(43, 201, 124);
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+#attendance-options:hover {
+    border-color: rgb(61, 191, 242);
+}
+
+@media (max-width: 768px) {
+    #attendance-options {
+        width: 100%;
+        margin-top: 10px;
+        font-size: 18px;
+    }
+}
+
+.filter-section {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 0 auto 10px;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+.filter-item label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+
+.filter-item input[type="date"],
+.filter-item select,
+.filter-item button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.filter-item button {
+    background-color: #16764d;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-item button:hover {
+    background-color: #0a5233;
+}
+
+@media (max-width: 600px) {
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-item {
+        width: 100%;
+    }
+}
+.notification-badge {
+    background-color: red;
+    color: white;
+    font-size: 10px;
+    border-radius: 50%;
+    padding: 3px 7px;
+    position: relative;
+    top: -10px;
+    left: 10px;
+    font-weight: bold;
+}
+
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-network-wired"></i>
+            <div class="logo-text">
+                <h1>ALTOS</h1>
+                <p>Technologies</p>
+            </div>
+        </div>
+        <div class="toggle-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="navbar-links">
+            <li><a style="font-weight: 300;" href="{% url 'developerhome' %}" class="active">DEVELOPER HOME</a></li>
+            <li><a style="font-weight: 300;" href="{% url 'assigned_project_for_developer' %}">PROJECTS</a></li>
+            <li>
+                <select id="attendance-options" onchange="location = this.value;" style="width:160px;margin-top: 20px;">
+                    <option value="" disabled selected>DAILY REPORTS</option>
+                    <option value="{% url 'update_daily_report' %}">UPDATE REPORT</option>
+                    <option value="{% url 'view_daily_reports' %}">VIEW REPORTS</option>
+                </select>
+             
+            </li>
+            <li>
+                <select id="attendance-options" onchange="location = this.value;" style="width:160px;margin-top: 20px;">
+                    <option value="" disabled selected>WORKS</option>
+                    <option value="{% url 'view_assigned_work' %}">UPLOAD WORKS
+                    </option>
+                    <option value="{% url 'view_submitted_works_by_developer' %}">SUBMITTED WORKS</option>
+                </select>
+                {% if pending_works_count > 0 %}
+                            <span class="notification-badge">{{ pending_works_count }}</span>
+                {% endif %}
+            </li>          
+            <li><a style="font-weight: 300;" href="{% url 'reset_password_developer' %}">PASSWORD RESET</a></li>
+            <li><a style="font-weight: 300;color: red;" href="{% url 'logout' %}" class="join-now" style="color: red;">LOGOUT</a></li>
+        </ul>
+    </nav>
+
+
+
+
+    <div class="container">
+        {% if messages %}
+            <div class="alert-container">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    
+        
+        <div class="filter-section">
+            <form method="get" class="filter-form">
+                <div class="filter-item">
+                    <select id="project" name="project" style="margin-top: 20px;">
+                        <option value="">All Projects</option>
+                        {% for project in projects %}
+                            <option value="{{ project.id }}" {% if project.id|stringformat:"s" == project_id|stringformat:"s" %}selected{% endif %}>
+                                {{ project.project_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+        
+                <div class="filter-item">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ start_date|default_if_none:'' }}">
+                </div>
+        
+                <div class="filter-item">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ end_date|default_if_none:'' }}">
+                </div>
+        
+                <div class="filter-item">
+                    <select id="status" name="status" style="margin-top: 20px;">
+                        <option value="">All status</option>
+                        <option value="Submitted" {% if status == 'Submitted' %}selected{% endif %}>Submitted</option>
+                        <option value="Verified" {% if status == 'Verified' %}selected{% endif %}>Verified</option>
+                    </select>
+                </div>
+        
+                <div class="filter-item">
+                    <button type="submit" style="margin-top: 20px;">SEARCH</button>
+                </div>
+            </form>
+        </div>
+        
+        
+        <div class="table-responsive">
+            
+            {% if submitted_works %}
+            <table class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Module</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                        <th>Attachment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for work in submitted_works %}
+                        <tr>
+                            <td>{{ work.project.project_name }}</td>
+                            <td>{{ work.module }}</td>
+                            <td>{{ work.start_date }}</td>
+                            <td>{{ work.end_date }}</td>
+                            <td>
+                                {% if work.submit_date %}
+                                    {{ work.submit_date }}
+                                {% else %}
+                                    Not Submitted
+                                {% endif %}
+                            </td>
+                            <td>{{ work.status }}</td>
+                            <td>
+                                {% if work.upload %}
+                                    <a href="{{ work.upload.url }}" download>Download</a>
+                                {% else %}
+                                    No file
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No submitted works found.</p>
+        {% endif %}
+            </table>
+        </div>
+    </div>
+    
+    
+
+
+
+
+
+
+     
+    <footer>
+        <div class="footer-container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <p>We are dedicated to providing quality education.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#courses">Courses</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                <p class="footer-text">&copy; 2024 Altos Technologies. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleBtn = document.querySelector('.toggle-btn');
+        const navbarLinks = document.querySelector('.navbar-links');
+
+        toggleBtn.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+
+        document.getElementById('toggleCurrent').addEventListener('click', function () {
+                        const passwordField = document.getElementById('password');
+                        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordField.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+    </script>
+</body>
+</html> 
+
+
+
+
+
+
+

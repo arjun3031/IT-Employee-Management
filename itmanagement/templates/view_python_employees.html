@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Python Employees</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Python Employees</h1>
+
+    <form method="GET">
+        <label for="name">Filter by Name:</label>
+        <input type="text" id="name" name="name" value="{{ name_filter }}">
+        
+        <label for="project">Filter by Project:</label>
+        <input type="text" id="project" name="project" value="{{ project_filter }}">
+        
+        <button type="submit">Filter</button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Employee Name</th>
+                <th>Role</th>
+                <th>Current Project</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ employee.user.username }}</td>
+                    <td>{{ employee.role }}</td>
+                    <td>
+                        {% if employee.assigned_project %}
+                            {{ employee.assigned_project.project_name }}
+                        {% else %}
+                            No project assigned
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No employees found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</body>
+</html>

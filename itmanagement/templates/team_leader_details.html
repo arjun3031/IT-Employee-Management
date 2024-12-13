@@ -1,0 +1,621 @@
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Team leader of developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    background: url("{% static 'images/studenthome.avif' %}") no-repeat center center/cover;
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%; 
+}
+
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 35px;
+            color: rgb(4, 71, 33);
+            margin-right: 14px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            color: rgb(10, 108, 61);
+            font-size: 40px;
+            margin-bottom: 5px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        .logo p {
+            font-size: 18px;
+            color: rgb(141, 145, 145);
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            margin-left: auto;
+            padding-left: 30px;
+        }
+
+        .navbar-links li {
+            margin-left: 30px;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 15px 0;
+            line-height: 60px;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: rgb(32, 188, 115);
+        }
+
+     
+        .navbar-links.toggle {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .navbar-links.active {
+            display: flex;
+        }
+
+        .toggle-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                align-items: center;
+                height: auto;
+                padding: 10px;
+            }
+
+            .navbar-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                background-color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .navbar-links li {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                text-align: left;
+            }
+        
+
+       
+            .navbar-links a {
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .toggle-btn {
+                display: block;
+                color: black;
+                margin-left: auto;
+            }
+        }
+
+    
+        
+        
+        footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative; 
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    margin-top: auto; 
+}
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-column {
+            flex: 1;
+            margin: 10px 20px;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: rgb(238, 250, 255);
+        }
+
+        .footer-column p, .footer-column ul {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #555;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-columns {
+                flex-direction: column;
+                text-align: left;
+            }
+        }
+        
+
+        .course-form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s, transform 0.3s;
+            max-width: 400px;
+            width: 100%; 
+            margin: 0 auto 20px; 
+        }
+    
+        .course-form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    
+        .form-group {
+            margin-bottom: 15px;
+            margin-bottom: 30px;
+
+        }
+    
+        .form-group input{
+            width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    font-size: 16px; 
+    appearance: none; 
+    background-color: #fff; 
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+        }
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 16px; 
+    appearance: none; 
+    background-color: #fff; 
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="rgb(150, 150, 150)" d="M2 0L0 2h4z"/></svg>'); 
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease; 
+}
+
+.form-group select:focus, 
+.form-group input:focus {
+    border-color: #66afe9; 
+    outline: none; 
+}
+
+    
+.submit-btn {
+    width: 100%; 
+    padding: 10px;
+    background-color: #66afe9; 
+    border: none; 
+    border-radius: 4px;
+    font-size: 16px; 
+    color: white;
+    cursor: pointer; 
+    text-align: center; 
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #559fd4; }
+
+    
+        @media (max-width: 768px) {
+            .course-form-container {
+                max-width: 90%; 
+            }
+    
+            .form-group input {
+                font-size: 14px;
+            }
+    
+            .submit-btn {
+                padding: 10px 16px;
+            }
+        }
+        .date-label {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        font-size: 16px;
+        color: #aaa;
+        transition: 0.3s ease;
+        pointer-events: none;
+    }
+   
+    
+    .message-container {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    background: transparent; 
+}
+
+.alert {
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8); 
+    color: #078d29; 
+    border: 1px solid #ccc; 
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+    width: 100%;
+    max-width: 1400px; 
+    margin: 0 auto;
+}
+
+.course-card {
+    background: linear-gradient(to right, rgba(43, 154, 97, 0.9), rgba(255, 255, 255, 0.9));
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+    padding: 17px;
+    width: 100%;
+    min-width: 500px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        margin-bottom: 350px;
+    }
+
+    .course-card {
+        max-width: 90%; 
+        min-height: 200px;
+    }
+
+    .card-header h2 {
+        font-size: 22px;
+    }
+
+    .card-body p {
+        font-size: 16px;
+    }
+
+    .enroll-btn {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+}
+
+.dashboard {
+    padding: 20px;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url("{% static 'images/tm.jpg' %}") no-repeat center center/cover;
+}
+
+
+        
+#attendance-options {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid rgb(43, 201, 124);
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+#attendance-options:hover {
+    border-color: rgb(61, 191, 242);
+}
+
+@media (max-width: 768px) {
+    #attendance-options {
+        width: 100%;
+        margin-top: 10px;
+        font-size: 18px;
+    }
+}
+
+.notification-badge {
+        background-color: red;
+        color: white;
+        font-size: 10px;
+        border-radius: 50%;
+        padding: 3px 7px;
+        position: relative;
+        top: -10px;
+        left: 10px;
+        font-weight: bold;
+    }
+
+</style>
+
+
+        
+
+        
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-network-wired"></i>
+            <div class="logo-text">
+                <h1>ALTOS</h1>
+                <p>Technologies</p>
+            </div>
+        </div>
+        <div class="toggle-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="navbar-links">
+            <li><a href="{% url 'developerhome' %}" class="active">DEVELOPER HOME</a></li>
+            <li><a href="{% url 'assigned_project_for_developer' %}">PROJECTS</a></li>
+            <li><a href="{% url 'team_leader_details' developer.id %}">TEAM LEADER</a></li>  
+            <li>
+                <select id="attendance-options" onchange="location = this.value;" style="width:160px;">
+                    <option value="" disabled selected>DAILY REPORTS</option>
+                    <option value="{% url 'update_daily_report' %}">UPDATE REPORT</option>
+                    <option value="{% url 'view_daily_reports' %}">VIEW REPORTS</option>
+                </select>
+                <!-- {% if not today_report_submitted %}
+                    <span class="notification-badge">!</span>  
+                {% endif %} -->
+            </li>
+            <li>
+                <select id="attendance-options" onchange="location = this.value;" style="width:160px;">
+                    <option value="" disabled selected>WORKS</option>
+                    <option value="{% url 'view_assigned_work' %}">UPLOAD WORKS
+                    </option>
+                    <option value="{% url 'view_submitted_works_by_developer' %}">SUBMITTED WORKS</option>
+                </select>
+                {% if pending_works_count > 0 %}
+                            <span class="notification-badge">{{ pending_works_count }}</span>
+                {% endif %}
+            </li>          
+            <li><a href="{% url 'reset_password_developer' %}">PASSWORD RESET</a></li>
+            <li><a href="{% url 'logout' %}" class="join-now" style="color: red;">LOGOUT</a></li>
+        </ul>
+        
+        
+    </nav>
+
+
+
+
+
+    <div class="dashboard">
+        <div class="container">
+            <div class="card-container" style="padding: 20px;">
+                {% if team_leader %}
+                <div class="course-card" style="background: linear-gradient(to right, #128058, #c6e6e7); border: 1px solid #dee2e6; border-radius: 18px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden; text-align: center;">
+                    <div class="card-header" style="background: linear-gradient(to right, #04bf90, #6d706f); color: white; padding: 10px;">
+                        <h2 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">{{ team_leader.user.first_name }} {{ team_leader.user.last_name }}</h2>
+                    </div>
+                    <div class="image-container" style="margin: 20px auto; text-align: center;">
+                        {% if team_leader.image %}
+                        <img src="{{ team_leader.image.url }}" alt="Team Leader Image" style="width: 220px; height: 220px; border-radius: 50%; border: 2px solid #ddd; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);" />
+                        {% else %}
+                        <p>No image available</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-body" style="padding: 10px; color: white;">
+                        <div class="team-leader-info">
+                            <div class="text-info">
+                                <p style="text-transform: uppercase; color: rgb(5, 43, 4); text-shadow: #c6e6e7; font-weight: bolder; margin-bottom: 10px;"><i style="color: white;" class="fa-solid fa-thumbtack"></i>  {{ project.project_name }} project</p>
+                                <div style="border-radius: 8px; padding: 20px; max-width: 350px; margin: 0 auto; background: rgba(202, 245, 222, 0.6); box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s, box-shadow 0.3s; text-align: center; cursor: pointer;">
+                                    <h3 style="font-size: 24px; font-weight: 600; color: #075233; margin-bottom: 15px;">Personal Info</h3>
+                                    <p style="font-size: 18px; font-weight: 400; color: #0d5333; margin-bottom: 10px;"><strong>Email:</strong> {{ team_leader.user.email }}</p>
+                                    <p style="font-size: 18px; font-weight: 400; color: #0d5333; margin-bottom: 10px;"><strong>Mobile:</strong> {{ team_leader.mobile }}</p>
+                                    <p style="font-size: 18px; font-weight: 400; color: #0d5333;"><strong>Address:</strong> {{ team_leader.address }}</p>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="no-courses" style="text-align: center;">No team leader assigned.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <p>We are dedicated to providing quality education.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                &copy; 2024 Altos Technologies. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleBtn = document.querySelector('.toggle-btn');
+        const navbarLinks = document.querySelector('.navbar-links');
+
+        toggleBtn.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+
+        document.getElementById('toggleCurrent').addEventListener('click', function () {
+                        const passwordField = document.getElementById('password');
+                        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordField.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+    </script>
+</body>
+</html>

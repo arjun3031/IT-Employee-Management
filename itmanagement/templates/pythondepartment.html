@@ -1,0 +1,515 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Department</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 35px;
+            color: rgb(4, 71, 33);
+            margin-right: 14px;
+        }
+
+
+
+        .logo h1 {
+            color: rgb(10, 108, 61);
+            font-size: 40px;
+            margin-bottom: 5px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        .logo p {
+            font-size: 18px;
+            color: rgb(75, 83, 85);
+        }
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            margin-left: auto;
+            padding-left: 30px;
+        }
+
+        .navbar-links li {
+            margin-left: 30px;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 15px 0;
+            line-height: 60px;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: rgb(32, 188, 115);
+        }
+
+
+        /* .navbar-links a.active {
+            color: rgb(61, 191, 242);
+        } */
+
+        .toggle-btn {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        @media (max-width: 768px) {
+    nav {
+        flex-direction: row;
+        align-items: center;
+        height: auto;
+        padding: 10px;
+    }
+
+    .navbar-links {
+        display: none; 
+        flex-direction: column; 
+        width: 100%; 
+        position: absolute; 
+        top: 80px; 
+        left: 0; 
+        background-color: white; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0; 
+        padding-left: 0; 
+    }
+
+    .navbar-links.active {
+        display: flex; 
+    }
+
+    .navbar-links li {
+        margin-left: 0; 
+        margin-top: 10px; 
+        width: 100%; 
+        text-align: left; 
+    }
+
+    .navbar-links a {
+        padding: 10px 20px; 
+        width: 100%; 
+    }
+
+
+    .toggle-btn {
+        display: block; 
+        color: black; 
+        margin-left: auto; 
+    }
+}
+.dashboard {
+    background: url("{% static 'images/project.png' %}") no-repeat center center/cover;
+    padding: 20px;
+    background-color: #f9f9f9;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    font-size: 54px;
+    font-weight: bold;
+    color: rgb(227, 244, 255);
+    margin-bottom: 60px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.3s ease;
+    text-shadow: 2px 2px 5px rgb(0, 0, 0);
+    margin-top: 55px;
+    -webkit-text-stroke: 1px rgb(78, 77, 77);
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: calc(33.33% - 20px);
+    /* width: calc(25% - 20px); */
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    color: rgb(14, 86, 114);
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 23px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.card p {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #2b2b2b;
+    line-height: 1.6;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+h2:hover {
+    color: rgb(18, 113, 142);
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 10px;
+    }
+
+    .card {
+        width: calc(70% - 20px); 
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .card h3 {
+        font-size: 20px;
+    }
+
+    .card p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: calc(100% - 20px);
+    }
+}
+
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-column {
+            flex: 1;
+            margin: 10px 20px;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: rgb(239, 251, 255);
+        }
+
+        .footer-column p, .footer-column ul {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #555;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-columns {
+                flex-direction: column;
+                text-align: left;
+            }
+        }
+
+        #attendance-options {
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid rgb(43, 201, 124);
+            border-radius: 4px;
+            background-color: rgb(255, 255, 255);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        #attendance-options:hover {
+            border-color: rgb(61, 191, 242);
+        }
+        
+        @media (max-width: 768px) {
+            #attendance-options {
+                width: 100%;
+                margin-top: 10px;
+                font-size: 18px;
+            }
+        }
+
+        .notification-badge {
+            background-color: red;
+            color: white;
+            font-size: 10px;
+            border-radius: 50%;
+            padding: 3px 7px;
+            position: relative;
+            top: -10px;
+            left: 10px;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-network-wired"></i>
+            <div class="logo-text">
+                <h1>ALTOS</h1>
+                <p>Technologies</p>
+            </div>
+        </div>
+        <div class="toggle-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="navbar-links">
+            <li><a style="font-weight: 300;" href="{% url 'adminhome' %}" class="active">ADMIN HOME</a></li>
+
+            <li><a style="font-weight: 300;" href="{% url 'manageuser' %}">
+                USERS
+                {% if pending_count > 0 %}
+                    <span class="notification-badge">{{ pending_count }}</span>
+                {% endif %}
+            </a></li>
+            <li><a style="font-weight: 300;" href="{% url 'manageproject' %}">
+                PROJECTS
+                {% if projuct_count > 0 %}
+                    <span class="notification-badge">{{ projuct_count }}</span>
+                {% endif %}
+            </a></li>
+            <li><a style="font-weight: 300;" href="{% url 'logout' %}" class="join-now" style="color: red;">LOGOUT</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="dashboard">
+        <h2>PYTHON Department</h2>
+        <div class="card-container">
+            <div class="card">
+                <a href="{% url 'python_users' %}" style="text-decoration: none; color: inherit;">
+                    <h3>VIEW EMPLOYEE</h3>
+                    <p>Indivitual details of the employess in system </p>
+                </a>
+            </div>
+           
+            <div class="card">
+                <a href="{% url 'show_teamleaders' %}" style="text-decoration: none; color: inherit;">
+                    <h3>VIEW TEAM LEADERS</h3>
+                    <p>View team leaders details of the system</p>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="{% url 'show_developers' %}" style="text-decoration: none; color: inherit;">
+                    <h3>VIEW DEVELOPORS</h3>
+                    <p>View the developers details of the system </p>
+                </a>
+            </div>
+            
+            <div class="card">
+                <a href="{% url 'viewdevelopers' %}" style="text-decoration: none; color: inherit;">
+                    <h3>PROMOTE OR DEMOTE</h3>
+                    <p>View all project employee related the our system</p>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="{% url 'assign_developers_to_team' %}" style="text-decoration: none; color: inherit;">
+                    <h3>ASSIGN DEVELPOERS</h3>
+                    <p>View all project employee related the our system</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="{% url 'python_employees' %}" style="text-decoration: none; color: inherit;">
+                    <h3>ALL PYTHON EMPLOYEES</h3>
+                    <p>Information about our users in the system</p>
+                </a>    
+            </div>
+            <div class="card">
+                <a href="{% url 'view_work_reports_by_admin' %}" style="text-decoration: none; color: inherit;">
+                    <h3>DEVELOPORS WORK REPORT</h3>
+                    <p>Information about our users in the system</p>
+                </a>    
+            </div>
+            <div class="card">
+                <a href="{% url 'view_all_team_leaders_daily_reports' %}" style="text-decoration: none; color: inherit;">
+                    <h3>TEAM LEADERS REPORTS</h3>
+                    <p>View all project details related the our system</p>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="" style="text-decoration: none; color: inherit;">
+                    <h3>MORE INFORMATION</h3>
+                    <p>View more details of this system setup</p>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <p>We are dedicated to providing quality education.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                &copy; 2024 Academia. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleBtn = document.querySelector('.toggle-btn');
+        const navbarLinks = document.querySelector('.navbar-links');
+
+        toggleBtn.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+
+        document.getElementById('toggleCurrent').addEventListener('click', function () {
+                        const passwordField = document.getElementById('password');
+                        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordField.setAttribute('type', type);
+                        this.classList.toggle('fa-eye-slash');
+                    });
+    </script>
+</body>
+</html>

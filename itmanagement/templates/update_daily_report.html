@@ -1,0 +1,533 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload daily report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: url("{% static 'images/tm.jpg' %}") no-repeat center center/cover;
+
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 35px;
+            color: rgb(4, 71, 33);
+            margin-right: 14px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            color: rgb(10, 108, 61);
+            font-size: 40px;
+            margin-bottom: 5px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        .logo p {
+            font-size: 18px;
+            color: rgb(141, 145, 145);
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            margin-left: auto;
+            padding-left: 30px;
+        }
+
+        .navbar-links li {
+            margin-left: 30px;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 15px 0;
+            line-height: 60px;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: rgb(32, 188, 115);
+        }
+
+     
+        .navbar-links.toggle {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .navbar-links.active {
+            display: flex;
+        }
+
+        .toggle-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                align-items: center;
+                height: auto;
+                padding: 10px;
+            }
+
+            .navbar-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                background-color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .navbar-links li {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                text-align: left;
+            }
+        
+
+       
+            .navbar-links a {
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .toggle-btn {
+                display: block;
+                color: black;
+                margin-left: auto;
+            }
+        }
+
+        .footer {
+            background-color: #04230a;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-column {
+            flex: 1;
+            margin: 10px 20px;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: rgb(235, 247, 236);
+        }
+
+        .footer-column p, .footer-column ul {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #555;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-columns {
+                flex-direction: column;
+                text-align: left;
+            }
+        }
+
+        .work-form-container {
+        max-width: 600px;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: rgba(249, 254, 255, 0.5);
+    }
+
+    .form-control:focus {
+        border-color: #007BFF;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #0e5346;
+        color: white;
+    }
+
+    .submit-btn:hover {
+        background-color: #5a6268;
+    }
+
+    @media (max-width: 768px) {
+        .work-form-container {
+            width: 85%;
+        }
+
+        .form-control {
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            font-size: 14px;
+        }
+        select.form-control {
+        width: 80%; 
+        margin: 0 auto;
+margin-left: 25px;    }
+    }
+
+
+
+.error-message {
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            margin-top: 7px;
+            border-radius: 5px; 
+            display: none; 
+            text-align: center; 
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .error-message {
+                font-size: 10px; 
+                padding: 8px;
+                margin-top: 8px;
+            }
+        }
+
+        .notification-badge {
+        background-color: red;
+        color: white;
+        font-size: 10px;
+        border-radius: 50%;
+        padding: 3px 7px;
+        position: relative;
+        top: -10px;
+        left: 10px;
+        font-weight: bold;
+    }
+    #attendance-options {
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid rgb(43, 201, 124);
+        border-radius: 4px;
+        background-color: rgb(255, 255, 255);
+        cursor: pointer;
+        transition: border-color 0.3s;
+    }
+    
+    #attendance-options:hover {
+        border-color: rgb(61, 191, 242);
+    }
+    
+    @media (max-width: 768px) {
+        #attendance-options {
+            width: 100%;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    }
+    .notification-badge {
+        background-color: red;
+        color: white;
+        font-size: 10px;
+        border-radius: 50%;
+        padding: 3px 7px;
+        position: relative;
+        top: -10px;
+        left: 10px;
+        font-weight: bold;
+    }
+
+    
+    </style>
+</head>
+<body>
+
+
+        <nav>
+            <div class="logo">
+                <i class="fa-solid fa-network-wired"></i>
+                <div class="logo-text">
+                    <h1>ALTOS</h1>
+                    <p>Technologies</p>
+                </div>
+            </div>
+            <div class="toggle-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="navbar-links">
+                <li><a href="{% url 'developerhome' %}" class="active">DEVELOPER HOME</a></li>
+                <li><a href="{% url 'assigned_project_for_developer' %}">PROJECTS</a></li>
+                <li>
+                    <select id="attendance-options" onchange="location = this.value;" style="width:160px;">
+                        <option value="" disabled selected>DAILY REPORTS</option>
+                        <option value="{% url 'update_daily_report' %}">UPDATE REPORT</option>
+                        <option value="{% url 'view_daily_reports' %}">VIEW REPORTS</option>
+                    </select>
+                    <!-- {% if not today_report_submitted %}
+                        <span class="notification-badge">!</span>  
+                    {% endif %} -->
+                </li>
+                <li>
+                    <select id="attendance-options" onchange="location = this.value;" style="width:160px;">
+                        <option value="" disabled selected>WORKS</option>
+                        <option value="{% url 'view_assigned_work' %}">UPLOAD WORKS
+                        </option>
+                        <option value="{% url 'view_submitted_works_by_developer' %}">SUBMITTED WORKS</option>
+                    </select>
+                    {% if pending_works_count > 0 %}
+                                <span class="notification-badge">{{ pending_works_count }}</span>
+                    {% endif %}
+                </li>          
+                <li><a href="{% url 'reset_password_developer' %}">PASSWORD RESET</a></li>
+                <li><a href="{% url 'logout' %}" class="join-now" style="color: red;">LOGOUT</a></li>
+            </ul>
+            
+        </nav>
+
+
+        <div class="work-form-container">
+            {% if messages %}
+                <div class="error-message active">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <select id="project_id" name="project_id" class="form-control" required>
+                        <option value="">Select a project</option>
+                        {% for project in projects %}
+                            <option value="{{ project.id }}">{{ project.project_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+        
+                <div class="form-group">
+                    <input type="text" id="team_leader" class="form-control" placeholder="Team leader" readonly>
+                </div>
+                
+
+                <div class="form-group">
+                    <textarea id="description" name="description" class="form-control" rows="4" placeholder="Add description" required></textarea>
+                </div>
+        
+                <div class="form-group">
+                    <input type="file" id="report_file" name="report_file" class="form-control" required>
+                </div>
+            
+                <button type="submit" class="submit-btn">SUBMIT REPORT</button>
+            </form>
+        </div>
+        
+        
+
+
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-columns">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <p>We are dedicated to providing quality education.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contact Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Altos Technologies. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<script>
+    const toggleBtn = document.querySelector('.toggle-btn');
+    const navbarLinks = document.querySelector('.navbar-links');
+
+    toggleBtn.addEventListener('click', () => {
+        navbarLinks.classList.toggle('active');
+    });
+
+    document.getElementById('project_id').addEventListener('change', function() {
+        var projectId = this.value;
+        fetch(`/get_team_leader/${projectId}/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('team_leader').value = data.team_leader || 'No team leader assigned';
+            })
+            .catch(error => console.error('Error fetching team leader:', error));
+    });
+</script>
+ 
+</body>
+</html>
+
+
+
+

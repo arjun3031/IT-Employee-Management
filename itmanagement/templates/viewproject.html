@@ -1,0 +1,845 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    background: url("{% static 'images/loginbg.webp' %}") no-repeat center center/cover;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+}
+
+
+nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            font-size: 35px;
+            color: rgb(4, 71, 33);
+            margin-right: 14px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            color: rgb(10, 108, 61);
+            font-size: 40px;
+            margin-bottom: 5px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+        }
+
+        .logo p {
+            font-size: 18px;
+            color: rgb(141, 145, 145);
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            margin-left: auto;
+            padding-left: 30px;
+        }
+
+        .navbar-links li {
+            margin-left: 30px;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 15px 0;
+            line-height: 60px;
+            transition: color 0.3s;
+        }
+
+        .navbar-links a:hover {
+            color: rgb(32, 188, 115);
+        }
+
+     
+        .navbar-links.toggle {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .navbar-links.active {
+            display: flex;
+        }
+
+        .toggle-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: row;
+                align-items: center;
+                height: auto;
+                padding: 10px;
+            }
+
+            .navbar-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                background-color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-links.active {
+                display: flex;
+            }
+
+            .navbar-links li {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+                text-align: left;
+            }
+        
+
+       
+            .navbar-links a {
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .toggle-btn {
+                display: block;
+                color: black;
+                margin-left: auto;
+            }
+        }
+@media (max-width: 768px) {
+    .toggle-btn {
+        display: block; 
+    }
+}
+
+
+        .dashboard {
+    flex: 1; 
+}
+        h2 {
+            color: rgb(61, 191, 242);
+            margin-bottom: 20px;
+            text-align: center; 
+        }
+        
+        .card {
+            background: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            padding: 20px;
+            margin-bottom: 30px;
+            max-width: 400px;
+            width: 100%; 
+            transition: transform 0.2s, box-shadow 0.2s; 
+        }
+        
+        .card:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+        }
+        
+        .card h3 {
+            color: rgb(14, 86, 114); 
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 23PX;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        
+        .card p {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    color: #2b2b2b; 
+    line-height: 1.6; 
+    text-align: center; 
+    font-size: 16px;
+    margin-top: 10px; 
+}
+
+h2 {
+    font-size: 29px; 
+    color: rgb(56, 169, 184); 
+    margin-bottom: 60px; 
+    text-align: center;
+    text-transform: uppercase; 
+    letter-spacing: 1.8px; 
+    transition: color 0.3s ease; 
+    text-shadow: 2px 2px 1px rgb(0, 0, 0); 
+    margin-top: 55px;
+
+}
+
+h2:hover {
+    color: rgb(18, 113, 142);
+}
+
+
+
+
+        @media (max-width: 768px) {
+            .dashboard {
+                padding: 10px; 
+            }
+        
+            .card {
+        max-width: 90%; 
+        margin: 10px 0; 
+        margin-bottom: 10px; 
+    }
+        
+            h2 {
+                font-size: 24px; 
+            }
+        
+            .card h3 {
+                font-size: 20px; 
+            }
+        
+            .card p {
+                font-size: 14px;
+            }
+        }
+        
+        
+        footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    width: 100%;
+    clear: both;
+    margin-top: auto; 
+    position: relative; 
+}
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-column {
+            flex: 1;
+            margin: 10px 20px;
+            min-width: 200px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: rgb(240, 251, 255);
+        }
+
+        .footer-column p, .footer-column ul {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: rgb(61, 191, 242);
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #555;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-columns {
+                flex-direction: column;
+                text-align: left;
+            }
+        }
+        
+
+        .course-form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s, transform 0.3s;
+            max-width: 400px;
+            width: 100%; 
+            margin: 0 auto 20px; 
+        }
+    
+        .course-form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    
+        .form-group {
+            margin-bottom: 15px;
+            margin-bottom: 30px;
+
+        }
+    
+        .form-group input{
+            width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+    font-size: 16px; 
+    appearance: none; 
+    background-color: #fff; 
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+        }
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 16px; 
+    appearance: none; 
+    background-color: #fff; 
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="rgb(150, 150, 150)" d="M2 0L0 2h4z"/></svg>'); 
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease; 
+}
+
+.form-group select:focus, 
+.form-group input:focus {
+    border-color: #66afe9; 
+    outline: none; 
+}
+
+    
+.submit-btn {
+    width: 100%; 
+    padding: 10px;
+    background-color: #66afe9; 
+    border: none; 
+    border-radius: 4px;
+    font-size: 16px; 
+    color: white;
+    cursor: pointer; 
+    text-align: center; 
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #559fd4; }
+
+    
+        @media (max-width: 768px) {
+            .course-form-container {
+                max-width: 90%; 
+            }
+    
+            .form-group input {
+                font-size: 14px;
+            }
+    
+            .submit-btn {
+                padding: 10px 16px;
+            }
+        }
+        .date-label {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        font-size: 16px;
+        color: #aaa;
+        transition: 0.3s ease;
+        pointer-events: none;
+    }
+   
+    
+    .message-container {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    background: transparent; 
+}
+
+.alert {
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8); 
+    color: #078d29; 
+    border: 1px solid #ccc; 
+}
+
+
+.dashboard {
+    width: 100%;
+    margin: 20px auto;
+    max-width: 1400px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .6); 
+}
+
+h1 {
+    text-align: center;
+    color: #09374b;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.filter-container {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 100%;
+}
+
+.filter-form label {
+    font-size: 16px;
+    color: #343a40;
+}
+
+.filter-form select,
+.filter-form input[type="date"],
+.filter-form button {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.filter-form select:focus,
+.filter-form input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.filter-form button {
+    background-color: #139382;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-form button:hover {
+    background-color: #0d9599;
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow-x: auto;
+}
+
+.attendance-table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #1d6f4c;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    .filter-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter-form {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .filter-form select,
+    .filter-form input[type="date"],
+    .filter-form button {
+        width: 70%;
+        margin-left: 35px;
+    }
+
+    .attendance-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+        white-space: nowrap;
+    }
+}
+
+
+.notification-badge {
+    background-color: red;
+    color: white;
+    font-size: 10px;
+    border-radius: 50%;
+    padding: 3px 7px;
+    position: relative;
+    top: -10px;
+    left: 10px;
+    font-weight: bold;
+}
+#attendance-options {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid rgb(43, 201, 124);
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+#attendance-options:hover {
+    border-color: rgb(61, 191, 242);
+}
+
+@media (max-width: 768px) {
+    #attendance-options {
+        width: 100%;
+        margin-top: 10px;
+        font-size: 18px;
+    }
+}
+.error-message {
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #f5c6cb; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            margin-top: 7px;
+            border-radius: 5px; 
+            display: none; 
+            text-align: center; 
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .error-message {
+                font-size: 10px; 
+                padding: 8px;
+                margin-top: 8px;
+            }
+        }
+</style>
+        
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-network-wired"></i>
+            <div class="logo-text">
+                <h1>ALTOS</h1>
+                <p style="font-size: 14px;">Technologies</p>
+            </div>
+        </div>
+    
+        <span class="toggle-btn" id="toggle-btn">
+            <i class="fas fa-bars"></i>
+        </span>
+        <ul class="navbar-links" id="navbar-links">
+            <li><a style="font-weight: 300;" href="{% url 'adminhome' %}" class="active">ADMIN HOME</a></li>
+            <li><a href="{% url 'manageproject' %}">
+                PROJECTS
+                {% if projuct_count > 0 %}
+                    <span class="notification-badge">{{ projuct_count }}</span>
+                {% endif %}
+            </a></li>
+            <li><a href="{% url 'manageuser' %}">
+                USERS
+                {% if pending_count > 0 %}
+                    <span class="notification-badge">{{ pending_count }}</span>
+                {% endif %}
+            </a></li>
+            <li>
+                <select id="attendance-options" onchange="location = this.value;" style="width:160px;">
+                    <option value="" disabled selected>DEPARTMENT</option>
+                    <option value="{% url 'pythondeppartment' %}">PYTHON</option>
+                    <option value="">DIGITAL MARKETING</option>
+
+                </select>
+            </li> 
+            <li><a style="font-weight: 300;color: red;" href="{% url 'logout' %}" class="join-now">LOGOUT</a></li>
+        </ul>
+    </nav>
+    
+
+    
+    
+    <div class="dashboard">
+        <div class="header"></div>
+        
+        <div class="dashboard">
+            <div class="header"></div>
+            <div class="error-message {% if messages %}active{% endif %}">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="filter-container">
+                
+                <form method="GET" class="filter-form">
+                    <select name="project_name" id="project_name">
+                        <option value="" selected>Select Project</option>
+                        {% for name in project_names %}
+                            <option value="{{ name }}" {% if project_name == name %}selected{% endif %}>{{ name }}</option>
+                        {% endfor %}
+                    </select>
+        
+                    <select name="project_status" id="project_status">
+                        <option value="" selected>Select Status</option>
+                        {% for status in project_statuses %}
+                            <option value="{{ status }}" {% if project_status == status %}selected{% endif %}>{{ status }}</option>
+                        {% endfor %}
+                    </select>
+        
+                    <div>
+                        <label for="start_date">Start Date</label>
+                        <input type="date" name="start_date" id="start_date" value="{{ start_date|date:'Y-m-d' }}">
+                    </div>
+        
+                    <div>
+                        <label for="end_date">End Date</label>
+                        <input type="date" name="end_date" id="end_date" value="{{ end_date|date:'Y-m-d' }}">
+                    </div>
+        
+                    <button type="submit">SEARCH</button>
+                </form>
+            </div>
+        
+            <div class="attendance-records">
+                <table class="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Email</th>
+                            <th>Project Name</th>
+                            <th>Team Leader</th>
+                            <th>Project Status</th>
+                            <th>Requirements</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if projects %}
+                            {% for project in projects %}
+                            <tr>
+                                <td>{{ project.client_name }}</td>
+                                <td>{{ project.client_email }}</td>
+                                <td>{{ project.project_name }}</td>
+                                <td>
+                                    {% if project.worker %}
+                                        {{ project.worker.user.first_name }} {{ project.worker.user.last_name }} 
+
+                                    {% else %}
+                                        Not Assigned 
+                                    {% endif %}
+                                </td>
+                                <td>{{ project.project_status }}</td>
+                                <td>{{ project.requirements }}</td>
+                                <td>{{ project.start_date }}</td>
+                                <td>{{ project.end_date }}</td>
+                                <td>
+                                    <a style="text-decoration: none;color: green;" href="{% url 'editproject' project.id %}">Edit</a> 
+                                </td>
+                               <td> 
+                                   <a style="color: red;text-decoration: none;" href="{% url 'deleteproject' project.id %}">Delete</a>
+                               </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="12" style="text-align:center;">No projects found.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+        
+       </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <p>We are dedicated to providing quality education.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Altos Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('toggle-btn');
+        const navbarLinks = document.getElementById('navbar-links');
+    
+        toggleBtn.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active'); 
+        });
+    </script>
+    
+</body>
+</html>
